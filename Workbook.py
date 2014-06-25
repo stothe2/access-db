@@ -1,6 +1,7 @@
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl import cell
+from openpyxl.styles import Style, Font, Alignment, Border
 import datetime
 
 class Workbook:
@@ -48,7 +49,13 @@ class Workbook:
 
 	# edit excel file
 	def setup(self, wb, ws, wsOld):
+		s1 = Style(font=Font(bold=True), alignment=Alignment(horizontal='center', vertical='center'))
+		s2 = Style(alignment=Alignment(horizontal='center', vertical='center'))
+		s3 = Style(font=Font(bold=True))
+		s4 = Style(font=Font(bold=True), alignment=Alignment(horizontal='center', vertical='center'))
+
 		# "Med/low" table, new column
+		ws['E6'].style = s1
 		ws['E6'].data_type = cell.Cell.TYPE_FORMULA
 		ws['E6'] = str(datetime.date.today())
 		ws['E7'] = 0
@@ -69,10 +76,12 @@ class Workbook:
 		ws['E20'] = 0
 		ws['E21'].data_type = cell.Cell.TYPE_FORMULA
 		ws['E21'] = '=sum(E17+E18+E19+E20)'
+		ws['E22'].style = s3
 		ws['E22'].data_type = cell.Cell.TYPE_FORMULA
 		ws['E22'] = '=sum(E11+E16+E21)'
 
 		# "Med/low" table, old column
+		ws['D6'].style = s1
 		ws['D6'] = wsOld['E6'].value
 		ws['D7'] = wsOld['E7'].value
 		ws['D8'] = wsOld['E8'].value
@@ -92,6 +101,7 @@ class Workbook:
 		ws['D20'] = wsOld['E20'].value
 		ws['D21'].data_type = cell.Cell.TYPE_FORMULA
 		ws['D21'] = '=sum(D17+D18+D19+D20)'
+		ws['D22'].style = s3
 		ws['D22'].data_type = cell.Cell.TYPE_FORMULA
 		ws['D22'] = '=sum(D11+D16+D21)'
 
@@ -104,9 +114,13 @@ class Workbook:
 		ws.merge_cells('B22:C22')
 
 		# "Med/low" table, text
+		ws['B5'].style = s1
 		ws['B5'] = 'Med/Low'
+		ws['B7'].style = s2
 		ws['B7'] = 'Confirmed'
+		ws['B12'].style = s2
 		ws['B12'] = 'Deferred'
+		ws['B17'].style = s2
 		ws['B17'] = 'In Review'
 		ws['C7'] = 'Future'
 		ws['C8'] = 'Past PCD'
@@ -123,9 +137,11 @@ class Workbook:
 		ws['C19'] = 'No PCD-Late'
 		ws['C20'] = 'No PCD-OK'
 		ws['C21'] = 'Subtotal'
+		ws['B22'].style = s1
 		ws['B22'] = 'Total'
 
 		# "High" table, new column
+		ws['L6'].style = s1
 		ws['L6'].data_type = cell.Cell.TYPE_FORMULA
 		ws['L6'] = str(datetime.date.today())
 		ws['L7'] = 0
@@ -146,10 +162,12 @@ class Workbook:
 		ws['L20'] = 0
 		ws['L21'].data_type = cell.Cell.TYPE_FORMULA
 		ws['L21'] = '=sum(L17+L18+L19+L20)'
+		ws['L22'].style = s3
 		ws['L22'].data_type = cell.Cell.TYPE_FORMULA
 		ws['L22'] = '=sum(L11+L16+L21)'
-		
+
 		# "High" table, old column
+		ws['K6'].style = s1
 		ws['K6'] = wsOld['L6'].value
 		ws['K7'] = wsOld['L7'].value
 		ws['K8'] = wsOld['L8'].value
@@ -169,6 +187,7 @@ class Workbook:
 		ws['K20'] = wsOld['L20'].value
 		ws['K21'].data_type = cell.Cell.TYPE_FORMULA
 		ws['K21'] = '=sum(K17+K18+K19+K20)'
+		ws['K22'].style = s3
 		ws['K22'].data_type = cell.Cell.TYPE_FORMULA
 		ws['K22'] = '=sum(K11+K16+K21)'
 
@@ -181,9 +200,13 @@ class Workbook:
 		ws.merge_cells('I22:J22')
 
 		# "High" table, text
+		ws['I5'].style = s1
 		ws['I5'] = 'High'
+		ws['I7'].style = s2
 		ws['I7'] = 'Confirmed'
+		ws['I12'].style = s2
 		ws['I12'] = 'Deferred'
+		ws['I17'].style = s2
 		ws['I17'] = 'In Review'
 		ws['J7'] = 'Future'
 		ws['J8'] = 'Past PCD'
@@ -200,38 +223,52 @@ class Workbook:
 		ws['J19'] = 'No PCD-Late'
 		ws['J20'] = 'No PCD-OK'
 		ws['J21'] = 'Subtotal'
+		ws['I22'].style = s1
 		ws['I22'] = 'Total'
 
 		# "Grand Total" table
 		ws.merge_cells('F24:H24')
+		ws['F24'].style = s1
 		ws['F24'] = 'Grand Total'
+		ws['F26'].style = s4
 		ws['F26'].data_type = cell.Cell.TYPE_FORMULA
 		ws['F26'] = '=sum(D22+K22+O13+O17)'
+		ws['G26'].style = s4
 		ws['G26'].data_type = cell.Cell.TYPE_FORMULA
 		ws['G26'] = '=sum(E22+L22+P13+P17)'
+		ws['H25'].style = s1
 		ws['H25'] = '%  Change'
+		ws['H26'].style = s4
 		ws['H26'].data_type = cell.Cell.TYPE_FORMULA
 		ws['H26'] = '=(F26-G26)/F26'
+		ws['F25'].style = s1
 		ws['F25'] = wsOld['F25'].value
+		ws['G25'].style = s1
 		ws['G25'].data_type = cell.Cell.TYPE_FORMULA
 		ws['G25'] = str(datetime.date.today())
 
 		# "Linedown" table
+		ws['O11'].style = s1
 		ws['O11'] = 'Linedown'
+		ws['O12'].style = s1
 		ws['O12'] = wsOld['O12'].value
+		ws['P12'].style = s1
 		ws['P12'].data_type = cell.Cell.TYPE_FORMULA
 		ws['P12'] = str(datetime.date.today())
 		ws['O13'] = wsOld['O13'].value
 		ws['P13'] = 0
-		
+
 		# "Safety" table
+		ws['O15'].style = s1
 		ws['O15'] = 'Safety'
+		ws['O16'].style = s1
 		ws['O16'] = wsOld['O16'].value
+		ws['P16'].style = s1
 		ws['P16'].data_type = cell.Cell.TYPE_FORMULA
 		ws['P16'] = str(datetime.date.today())
 		ws['O17'] = wsOld['O17'].value
 		ws['P17'] = 0
-		
+
 	# save excel file
 	def close(self, wb):
 		wb.save(self.wbName)
