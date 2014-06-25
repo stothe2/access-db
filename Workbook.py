@@ -11,16 +11,20 @@ class Workbook:
 		self.wsName = ''
 		self.wsNewName = ''
 
+	# return workbook name
 	def workbook_name(self):
 		return self.wbName
 
+	# return new worksheet name 
 	def worksheet_name(self):
-		return self.wsName
+		return self.wsNewName
 
+	# generate error message
 	def error(self, msg):
 		print 'Error: ' + msg
 		exit()
 
+	# open excel file
 	def load(self, wbName, wsName, wsNewName):
 		if not wbName:
 			self.error('invalid workbook name!')
@@ -42,6 +46,7 @@ class Workbook:
 		self.setup(wb, ws, wsOld)
 		return (ws, wb)
 
+	# edit excel file
 	def setup(self, wb, ws, wsOld):
 		# "Med/low" table, new column
 		ws['E6'].data_type = cell.Cell.TYPE_FORMULA
@@ -197,7 +202,7 @@ class Workbook:
 		ws['J21'] = 'Subtotal'
 		ws['I22'] = 'Total'
 
-		# "Grand total" table
+		# "Grand Total" table
 		ws.merge_cells('F24:H24')
 		ws['F24'] = 'Grand Total'
 		ws['F26'].data_type = cell.Cell.TYPE_FORMULA
@@ -211,7 +216,7 @@ class Workbook:
 		ws['G25'].data_type = cell.Cell.TYPE_FORMULA
 		ws['G25'] = str(datetime.date.today())
 
-		# Linedown table
+		# "Linedown" table
 		ws['O11'] = 'Linedown'
 		ws['O12'] = wsOld['O12'].value
 		ws['P12'].data_type = cell.Cell.TYPE_FORMULA
@@ -219,7 +224,7 @@ class Workbook:
 		ws['O13'] = wsOld['O13'].value
 		ws['P13'] = 0
 		
-		# Safety table
+		# "Safety" table
 		ws['O15'] = 'Safety'
 		ws['O16'] = wsOld['O16'].value
 		ws['P16'].data_type = cell.Cell.TYPE_FORMULA
@@ -227,5 +232,6 @@ class Workbook:
 		ws['O17'] = wsOld['O17'].value
 		ws['P17'] = 0
 		
+	# save excel file
 	def close(self, wb):
 		wb.save(self.wbName)
