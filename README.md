@@ -26,7 +26,7 @@ Open the command line, and type `python main.py`.
 
 ##Example
 
-```python
+```
 > python main.py
 1 Software
 2 Controls...1
@@ -35,3 +35,17 @@ Workbook name ('something.xlsx')...test.xlsx
 Previous worksheet name ('Sheet1')...13Jun
 New worksheet name ('Sheet2')...24Jun
 ```
+
+##Additional Comments
+
+1. The script assumes your existing excel sheet to be formatted in a particular way. To ensure correct numbers get copied over, do not change the formatting! To check if your formatting is correct, see below.
+  
+  **Table** | **Placement**
+  --- | ---
+  Med/Low | B5:E22
+  High | I5:L22
+  Linedown | O11:P13
+  Safety | O15:P17
+  Grand Total | F24:H26
+
+
