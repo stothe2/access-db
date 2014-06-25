@@ -1,10 +1,12 @@
 from Database import *
 from Workbook import *
 
+# generate error message
 def error(msg):
 	print 'Error' + msg
 	exit()
 
+# match choice number with query
 def choose_query(n):
 	if n == 1:
 		return 'ENG-Software'
@@ -13,11 +15,11 @@ def choose_query(n):
 	else:
 		error('invalid choice!')
 
+# generate final numbers
 def analysis(db, ws, wb):
 	for row in db.data():
-		# check status for row assignment
 		rownum = get_rownum(row) 
-		# check urgency
+		# urgency = med/Low?
 		if row[4] == 'Med/Low':
 			if row[8] == 'Future Commit':
 				ws['E%s'%(rownum)] = ws['E%s'%(rownum)].value + 1
@@ -26,7 +28,8 @@ def analysis(db, ws, wb):
 			elif row[8] == 'No Commit - Late':
 				ws['E%s'%(rownum+2)] = ws['E%s'%(rownum+2)].value + 1
 			elif row[8] == 'No Commit - OK':
-				ws['E%s'%(rownum+3)] = ws['E%s'%(rownum+3)].value + 1	
+				ws['E%s'%(rownum+3)] = ws['E%s'%(rownum+3)].value + 1
+		# urgency = high?
 		elif row[4] == 'High':
 			if row[8] == "Future Commit":
 				ws['L%s'%(rownum)] = ws['L%s'%(rownum)].value + 1
@@ -36,16 +39,22 @@ def analysis(db, ws, wb):
 				ws['L%s'%(rownum+2)] = ws['L%s'%(rownum+2)].value + 1
 			elif row[8] == 'No Commit - OK':
 				ws['L%s'%(rownum+3)] = ws['L%s'%(rownum+3)].value + 1
+		# urgency = linedown?
 		elif row[4] == 'Linedown':
 			ws['P13'] = ws['P13'].value + 1
+		# urgency = safety?
 		elif row[4] == 'Safety':
 			ws['P17'] = ws['P17'].value + 1
 
+# return row assignment
 def get_rownum(row):
+	# status = confirmed?
 	if row[5] == 'Confirmed':
 		return 7
+	# status = deferred?
 	elif row[5] == 'Deferred':
 		return 12
+	# status = in review?
 	elif row[5] == 'In Review':
 		return 17
 
