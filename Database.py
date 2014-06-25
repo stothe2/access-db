@@ -27,10 +27,12 @@ class Database:
 	def data(self):
 		return self.db
 
+	# generate error message
 	def error(self, msg):
 		print 'Error: ' + msg
 		exit()
 
+	# define query
 	def generate_query(self, name):
 		self.queryName = '\'' + name + '\''
 		self.queryStr = ("""SELECT dbo_tblChange.ECR_NO AS PR_Number, dbo_tblChange.Originator, [General - Latest Reviewer].Reviewer_Name, dbo_SolutionOwner.SolutionOwnerName, dbo_tblUrgency.Urgency, dbo_tblStatus.Status, dbo_tblChange.Submit_Date, dbo_tblChange.Effectivity_Date AS Planned_Complete_Date, dbo_tblChange.ECR_NO AS Stoplight, dbo_tblReason.Reason, dbo_CauseCode.CauseCode, dbo_tblSource.Source_Name
@@ -40,6 +42,7 @@ GROUP BY dbo_tblChange.ECR_NO, dbo_tblChange.Originator, [General - Latest Revie
 HAVING ((([General - Latest Reviewer].Review_Org)=%s))
 ORDER BY [General - Latest Reviewer].Review_Org, dbo_tblUrgency.Urgency, dbo_tblChange.Effectivity_Date DESC;""" % self.queryName)
 
+	# connect to Access and fetch data
 	def establish_connection(self, name):
 		if not os.path.isfile(name):
 			self.error('invalid path name!')
@@ -55,6 +58,7 @@ ORDER BY [General - Latest Reviewer].Review_Org, dbo_tblUrgency.Urgency, dbo_tbl
 		self.goalSafety = cursor.execute("SELECT Goal FROM [Disposition-Cycle_Time_Goals] WHERE Urgency In ('Safety')").fetchone()[0]
 		self.hol = cursor.execute('SELECT Holiday FROM Holidays').fetchall()
 
+	# generate stoplight column
 	def stoplight(self):
 		count = 0
 		dateArray = self.generate_date_array()
@@ -72,6 +76,7 @@ ORDER BY [General - Latest Reviewer].Review_Org, dbo_tblUrgency.Urgency, dbo_tbl
 				row[8] = "Future Commit"
 			count = count + 1
 
+	# helper
 	def generate_date_array(self):
 		dateArray = []
 		goal = self.generate_goal_array()
@@ -79,6 +84,7 @@ ORDER BY [General - Latest Reviewer].Review_Org, dbo_tblUrgency.Urgency, dbo_tbl
 			dateArray.append(self.deltaworkdays(item))
 		return dateArray
 
+	# helper
 	def generate_goal_array(self):
 		goal = []
 		for row in self.db:
@@ -92,6 +98,7 @@ ORDER BY [General - Latest Reviewer].Review_Org, dbo_tblUrgency.Urgency, dbo_tbl
 				goal.append(self.goalSafety)
 		return goal
 
+	# helper
 	def deltaworkdays(self, numDays):
 		addNum = 0
 		dayCount = 0
@@ -105,23 +112,19 @@ ORDER BY [General - Latest Reviewer].Review_Org, dbo_tblUrgency.Urgency, dbo_tbl
 		myDate = myDate.replace(hour=0, minute=0, second=0, microsecond=0)
 
 		while (dayCount != abs(numDays)):
-
 			myDate = myDate + datetime.timedelta(-addNum)
-			#myDate = myDate.replace(day = myDate.day + 1)
-
-			# execute if myDate not weekend
+			# myDate not Saturday and Sunday?
 			if myDate.weekday() != 5 and myDate.weekday() != 6:
-				# ??
 				x = self.find(myDate)
-				# execute if no match found
+				# myDate not a holiday?
 				if x is 0:
 					dayCount = dayCount + 1
 		return myDate
 
-	# helper function for deltaworkdays
+	# helper
 	def find(self, myDate):
 		check = 0
 		for row in self.hol:
-			if row.Holiday == myDate: # check syntax!!!!
+			if row.Holiday == myDate:
 				check = 1
 		return check
