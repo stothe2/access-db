@@ -3,14 +3,14 @@ from Workbook import *
 
 # generate error message
 def error(msg):
-	print 'Error' + msg
+	print 'Error: ' + msg
 	exit()
 
 # match choice number with query
 def choose_query(n):
-	if n == 1:
+	if n == '1':
 		return 'ENG-Software'
-	elif n == 2:
+	elif n == '2':
 		return 'ENG-Controls'
 	else:
 		error('invalid choice!')
@@ -63,7 +63,7 @@ def main():
 	wb = Workbook()
 
 	n = raw_input('1 Software\n2 Controls...')
-	name = choose_query(int(n))
+	name = choose_query(n)
 	db.generate_query(name)
 
 	path = raw_input('Path...')
