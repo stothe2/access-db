@@ -206,9 +206,9 @@ class Workbook:
 		ws.merge_cells('F24:H24')
 		ws['F24'] = 'Grand Total'
 		ws['F26'].data_type = cell.Cell.TYPE_FORMULA
-		ws['F26'] = '=sum(D22+K22)'
+		ws['F26'] = '=sum(D22+K22+O13+O17)'
 		ws['G26'].data_type = cell.Cell.TYPE_FORMULA
-		ws['G26'] = '=sum(E22+L22)'
+		ws['G26'] = '=sum(E22+L22+P13+P17)'
 		ws['H25'] = '%  Change'
 		ws['H26'].data_type = cell.Cell.TYPE_FORMULA
 		ws['H26'] = '=(F26-G26)/F26'
