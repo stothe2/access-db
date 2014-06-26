@@ -73,7 +73,8 @@ def main():
 	wbName = raw_input('Workbook name (\'somthing.xlsx\')...')
 	wsName = raw_input('Previous worksheet name (\'Sheet1\')...')
 	wsNewName = raw_input('New worksheet name (\'Sheet2\')...')
-	[ws, wbook] = wb.load(wbName, wsName, wsNewName)
+	wbNewName = raw_input('New workbook name (\'something2.xlsx\')...')
+	[ws, wbook] = wb.load(wbName, wsName, wsNewName, wbNewName)
 	analysis(db, ws, wbook)
 	wb.close(wbook)
 
