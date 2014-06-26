@@ -247,6 +247,7 @@ class Workbook:
 		ws['G25'] = str(datetime.date.today())
 
 		# "Linedown" table
+		ws.merge_cells('O11:P11')
 		ws['O11'].style = s1
 		ws['O11'] = 'Linedown'
 		ws['O12'].style = s1
@@ -258,6 +259,7 @@ class Workbook:
 		ws['P13'] = 0
 
 		# "Safety" table
+		ws.merge_cells('O15:P15')
 		ws['O15'].style = s1
 		ws['O15'] = 'Safety'
 		ws['O16'].style = s1
