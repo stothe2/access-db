@@ -1,3 +1,4 @@
+import os.path
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl import cell
@@ -27,19 +28,22 @@ class Workbook:
 
 	# open excel file
 	def load(self, wbName, wsName, wsNewName):
-		if not wbName:
+		if not os.path.isfile(wbName):
 			self.error('invalid workbook name!')
-		if not wsName:
+		
+		wb = load_workbook(filename = r'%s' % wbName)
+		
+		if not wb.get_sheet_by_name(wsName):
 			self.error('invalid previous worksheet name!')
 		if not wsNewName:
 			self.error('invalid new worksheet name!')
 		if wsName == wsNewName:
 			self.error('previous worksheet and new worksheet cannot be same!')
+		
 		self.wbName = wbName
 		self.wsName = wsName
 		self.wsNewName = wsNewName
 
-		wb = load_workbook(filename = r'%s' % wbName)
 		wsOld = wb[wsName]
 		ws = wb.create_sheet(title=wsNewName)
 
