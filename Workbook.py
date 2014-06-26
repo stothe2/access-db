@@ -2,7 +2,7 @@ import os.path
 from openpyxl import Workbook
 from openpyxl import load_workbook
 from openpyxl import cell
-from openpyxl.styles import Style, Font, Alignment, Border
+from openpyxl.styles import Style, Font, Alignment, Border, NumberFormat
 import datetime
 
 class Workbook:
@@ -56,6 +56,7 @@ class Workbook:
 		s2 = Style(alignment=Alignment(horizontal='center', vertical='center'))
 		s3 = Style(font=Font(bold=True))
 		s4 = Style(font=Font(bold=True), alignment=Alignment(horizontal='center', vertical='center'))
+		s5 = Style(font=Font(bold=True), alignment=Alignment(horizontal='center', vertical='center'), number_format=NumberFormat(format_code='0.00%'))
 
 		# "Med/low" table, new column
 		ws['E6'].style = s1
@@ -241,11 +242,11 @@ class Workbook:
 		ws['G26'] = '=sum(E22+L22+P13+P17)'
 		ws['H25'].style = s1
 		ws['H25'] = '%  Change'
-		ws['H26'].style = s4
+		ws['H26'].style = s5
 		ws['H26'].data_type = cell.Cell.TYPE_FORMULA
 		ws['H26'] = '=(F26-G26)/F26'
 		ws['F25'].style = s1
-		ws['F25'] = wsOld['F25'].value
+		ws['F25'] = wsOld['G25'].value
 		ws['G25'].style = s1
 		ws['G25'].data_type = cell.Cell.TYPE_FORMULA
 		ws['G25'] = str(datetime.date.today())
@@ -255,7 +256,7 @@ class Workbook:
 		ws['O11'].style = s1
 		ws['O11'] = 'Linedown'
 		ws['O12'].style = s1
-		ws['O12'] = wsOld['O12'].value
+		ws['O12'] = wsOld['P12'].value
 		ws['P12'].style = s1
 		ws['P12'].data_type = cell.Cell.TYPE_FORMULA
 		ws['P12'] = str(datetime.date.today())
@@ -267,7 +268,7 @@ class Workbook:
 		ws['O15'].style = s1
 		ws['O15'] = 'Safety'
 		ws['O16'].style = s1
-		ws['O16'] = wsOld['O16'].value
+		ws['O16'] = wsOld['P16'].value
 		ws['P16'].style = s1
 		ws['P16'].data_type = cell.Cell.TYPE_FORMULA
 		ws['P16'] = str(datetime.date.today())
