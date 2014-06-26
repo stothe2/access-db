@@ -42,7 +42,7 @@ New worksheet name ('Sheet2')...24Jun
 
 2. Make sure you save the Access DB file on your system (and, like above, keep the address handy).
 
-2. The script works under the assumption that your pre-existing Excel sheet is formatted in a particular way. To ensure correct numbers get copied over, do **not** change the formatting! Correct placement is given below.
+2. The script works under the assumption that your pre-existing Excel sheet is formatted in a particular way. To ensure correct numbers get copied over, do _**not**_ change the formatting! Correct placement is given below.
   
   **Table** | **Placement**
   --- | ---
@@ -51,3 +51,8 @@ New worksheet name ('Sheet2')...24Jun
   Linedown | O11:P13
   Safety | O15:P17
   Grand Total | F24:H26
+
+##Branch: wip/layout 
+Instead of saving the new analysis sheet in the same Excel file as the previous analysis sheet, the data is directly written into a *layout* sheet, and then saved in a new copy of the file/workbook (the new Excel file carries over all the previous sheets *except* the layout sheet.
+
+####Note, this version requires you to have a pre-existing layout sheet, titled `Sheet`, in your Excel file.
