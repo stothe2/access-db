@@ -41,8 +41,7 @@ class Workbook:
 
 		wb = load_workbook(filename = r'%s' % wbName)
 		wsOld = wb[wsName]
-		ws = wb.create_sheet()
-		ws.title = wsNewName
+		ws = wb.create_sheet(title=wsNewName)
 
 		self.setup(wb, ws, wsOld)
 		return (ws, wb)
