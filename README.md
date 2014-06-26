@@ -30,7 +30,7 @@ Open the command line, and type `python main.py`.
 > python main.py
 1 Software
 2 Controls...1
-Path...C:\Users\LAMy\Desktop\GitCode\analysis-tool\PR-Metrics.accdb
+Path...C:\Users\yourUsername\Desktop\GitCode\analysis-tool\PR-Metrics.accdb
 Workbook name ('something.xlsx')...test.xlsx
 Previous worksheet name ('Sheet1')...13Jun
 New worksheet name ('Sheet2')...24Jun
@@ -38,7 +38,11 @@ New worksheet name ('Sheet2')...24Jun
 
 ##Additional Comments
 
-1. The script assumes your existing excel sheet to be formatted in a particular way. To ensure correct numbers get copied over, do not change the formatting! To check if your formatting is correct, see below.
+1. The script **cannot** work without a pre-existing Excel file containing a worksheet with data from your last analysis (keep their names handy -- you'd be asked to enter these).
+
+2. Make sure you save the Access DB file on your system (and, like above, keep the address handy).
+
+2. The script works under the assumption that your pre-existing Excel sheet is formatted in a particular way. To ensure correct numbers get copied over, do **not** change the formatting! Correct placement is given below.
   
   **Table** | **Placement**
   --- | ---
@@ -47,5 +51,3 @@ New worksheet name ('Sheet2')...24Jun
   Linedown | O11:P13
   Safety | O15:P17
   Grand Total | F24:H26
-
-
